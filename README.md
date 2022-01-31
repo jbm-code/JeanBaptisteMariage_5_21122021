@@ -1,4 +1,5 @@
-![logo](https://user-images.githubusercontent.com/73023059/151767495-13fc8522-4ad8-4632-ae21-db5aa92efecb.png)
+![logo](https://user-images.githubusercontent.com/73023059/151768360-2f350fb9-e102-4c6d-8766-c1d280c4c44c.png)
+
 
 This is the front end and back end server for Project 5 of the Web Developer path.
 
