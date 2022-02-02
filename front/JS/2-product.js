@@ -1,6 +1,6 @@
 // 3- on récupère l'ID de l'URL
 const IDproduit = window.location.search.split("?id=").join("")
-console.log(" 3- l'ID du produit ciblé est :", IDproduit)                    /////////////// TEST 3 ////////////////
+console.log(" 3- l'ID du produit ciblé est :", IDproduit)                    
 
 // 4- on appelle dans l'API le produit ciblé par l'ID
 let produitData = []
@@ -9,8 +9,7 @@ const fetchProduit = async () => {
         .then((res) => res.json())
         .then((promise) => {
             produitData = promise
-            console.log(" 4- Données du produit en JSON:", produitData)       //////////// TEST 4 ////////////////////
-                   
+            console.log(" 4- Données du produit en JSON:", produitData)                   
         })
 }
 

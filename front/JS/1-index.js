@@ -7,11 +7,11 @@ const fetchAPI = async () => {
         .then((promise) => {
             kanapData = promise
             console.log("1 - affichage de la liste des produits de l'API")
-            console.table(kanapData)                                      ////////////////  TEST 1  //////////////
+            console.table(kanapData)                                      
         });            
 };
 
-// 2- on injecte dans le html les donnés de chaque produit, grace a la methode map()
+// 2- on injecte dans le html les données de chaque produit, grace a la methode map()
 const affichageIndex = async () => {
     await fetchAPI();
 

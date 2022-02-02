@@ -2,16 +2,13 @@ function panierJSON() {
     return JSON.parse(localStorage.getItem('panier'))
 }
 
-// 8 - fonction d'affichage
-async function creationAffichagePanier() {
+async function creationAffichagePanier() {    // 8 - fonction d'affichage
   let panier = panierJSON()
   let prixTotal = 0
   let quantiteTotal = 0
   let contentHtml = ""
 
-// 8a - si le panier existe, on crée une boucle
-
-  if (panier.length > 0){
+  if (localStorage.getItem("panier") && panier.length > 0){      // 8a - si le panier existe, on crée une boucle
       for (const produit of panier) {
         let produitId = produit.id;
         let produitColor = produit.color;
@@ -27,7 +24,6 @@ async function creationAffichagePanier() {
             let produitPrix = produitApi.price
             let total = produitPrix * produitQuantity
             
-
             contentHtml += `<article class="cart__item item_${produitId}" data-name ="${produitNom}" data-id ="${produitId}" data-color="${produitColor}">
                   <div class="cart__item__img">
                     <img src="${produitImage}" alt="${produitAlt}">
@@ -49,8 +45,6 @@ async function creationAffichagePanier() {
                     </div>
                   </div>
                 </article>`
-
-                ///// TEST 8a  //////////
             console.log(" 8a- la boucle for appelle les produits : ", produitNom, produitColor, "x", produitQuantity)
       
             prixTotal =parseInt(prixTotal) + parseInt(total)
@@ -77,8 +71,8 @@ async function creationAffichagePanier() {
   console.log("fin fonction affichage")
 }
 
-// 9 - fonctions de suppression, au click changent le localStorage
-function suppression(produitId, produitColor) {
+
+function suppression(produitId, produitColor) {  // 9 - fonctions de suppression, au click changent le localStorage
   const panier = panierJSON();
   const nouveauPanier = panier.filter(item => {
     if (item.id === produitId && item.color === produitColor) {
@@ -106,8 +100,8 @@ function definitionProduitASupprimer() {
   });
 }
 
-// 10 - fonctions de modification, au click changent le localStorage
-function modification(produitId, produitColor, produitQty) {
+
+function modification(produitId, produitColor, produitQty) {  
   const panier = panierJSON();
   const positionPanier = panier.findIndex(item => item.id === produitId && item.color === produitColor)
   panier[positionPanier].qty = produitQty
