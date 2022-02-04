@@ -63,8 +63,6 @@ document.getElementById("email").addEventListener("input", function(e) {
   }
 })
 
-
-
 function postForm() {
     
     let inputName = document.getElementById('firstName')
@@ -78,45 +76,41 @@ function postForm() {
    
     let tableauFinal = new Array
     panierJSON.forEach(element => {
-      tableauFinal.push(element.id)
+      tableauFinal.push(element.id)  // 1 - on créé un tableau avec les id des différents produits sélectionnés
 
-    console.table(tableauFinal)
-    
-    // destinataire    
-    const order = {
-        contact : {
-            firstName : inputName.value,
-            lastName: inputLastName.value,
-            address: inputAdress.value,
-            city: inputCity.value,
-            email: inputMail.value,
-        },
-        products: tableauFinal,
-    }
-    
-    // options d'envoi
-    const options = {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json', 
-            'Content-Type': 'application/json' 
-        },
-        body: JSON.stringify(order)
-    }
-    // 3 et 4 Envoi et récupération de l'orderId
-    fetch("http://localhost:3000/api/products/order", options)
-    .then((response) => response.json())
-    .then((data) => {
-      let lienPageConfirmation="./confirmation.html?id=" + data.orderId
-      //localStorage.clear()
-      document.location.href = lienPageConfirmation
+      const order = {             // 2 - fiche destinataire, qui contient les données client et les données produits
+          contact : {
+              firstName : inputName.value,
+              lastName: inputLastName.value,
+              address: inputAdress.value,
+              city: inputCity.value,
+              email: inputMail.value,
+          },
+          products: tableauFinal,
+      }
+      console.table(order) 
+      
+      const options = {        // 3 - options d'envoi
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json', 
+              'Content-Type': 'application/json' 
+          },
+          body: JSON.stringify(order)
+      }
+      
+      fetch("http://localhost:3000/api/products/order", options)  // on envoye les donnés a l'API avec une requête POST
+      .then((response) => response.json())
+      .then((data) => {               // on récupère orderId dans la réponse de l'API
+        console.log("orderId fourni par l'API", data);
+        document.location.href = "./confirmation.html?orderId=" + data.orderId  // on redirige vers la page confirmation
+        //localStorage.clear()
+      })
+      .catch(function (error) {
+          console.log ("Problème avec l'API : " + error.message)
+      })   
     })
-    .catch(function (error) {
-        console.log ("Problème avec l'API : " + error.message)
-    })
-})
 }
-
 
 //pour lancer la commande, le panier ne doit pas être vide et le formulaire correctement rempli
 document.getElementById("order").addEventListener("click", function (e) {  

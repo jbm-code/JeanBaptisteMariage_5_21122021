@@ -58,30 +58,29 @@ async function creationAffichagePanier() {    // 8 - fonction d'affichage
         })
       } 
     
-// 8b - sinon "le panier est vide"
-} else {
+} else {   // 8b - sinon "le panier est vide"
     contentHtml = "Votre panier est vide"
     document.getElementById('totalPrice').innerHTML = 0
     document.getElementById('totalQuantity').innerHTML = 0
   }
 
   document.getElementById('cart__items').innerHTML = ""
-  document.getElementById('cart__items').innerHTML = contentHtml
+  document.getElementById('cart__items').innerHTML = contentHtml  // On injecte "contentHtml" dans le html, via l'id "cart_items"
 
   console.log("fin fonction affichage")
 }
 
 
-function suppression(produitId, produitColor) {  // 9 - fonctions de suppression, au click changent le localStorage
+function suppression(IdASupprimer, colorASupprimer) {  // 9 - fonctions de suppression, au click changent le localStorage
   const panier = panierJSON();
   const nouveauPanier = panier.filter(item => {
-    if (item.id === produitId && item.color === produitColor) {
-      return false
+    if (item.id === IdASupprimer && item.color === colorASupprimer) {
+      return false          // -> supprime le produit ciblé
     } else {
-      return true
+      return true           // -> conserve le produit ciblé
     }
   })
-  console.log(" 9b- suppression -> creation du nouveau panier", nouveauPanier)    ////// TEST 9b ///////           
+  console.log(" 9b- suppression -> creation du nouveau panier", nouveauPanier)              
   localStorage.setItem('panier', JSON.stringify(nouveauPanier))
     
   affichageAsynchrone()
@@ -94,18 +93,18 @@ function definitionProduitASupprimer() {
       const itemId = item.dataset.id;
       const itemColor = item.dataset.color;
       const itemNom = item.dataset.name
-      console.log(" 9a- click, le produit ", itemNom, itemColor, "va être supprimé")                ///// TEST 9a ////////                          
+      console.log(" 9a- click, le produit ", itemNom, itemColor, "va être supprimé")                                          
       suppression(itemId, itemColor)
     });
   });
 }
 
 
-function modification(produitId, produitColor, produitQty) {  
+function modification(produitId, produitColor, produitQty) {      // 10 - fonctions de modifications, au "change", modifient le localstorage
   const panier = panierJSON();
   const positionPanier = panier.findIndex(item => item.id === produitId && item.color === produitColor)
   panier[positionPanier].qty = produitQty
-  console.log(" 10- click, modification -> la position du produit dans le panier =", positionPanier)  ////// TEST 10 ///////    
+  console.log(" 10- click, modification -> position =", positionPanier, "nouvelle quantité =", produitQty)      
   localStorage.setItem('panier', JSON.stringify(panier))
   affichageAsynchrone()
 }
@@ -122,13 +121,9 @@ function definitionProduitAModifier() {
   });
 }
 
-// 11 - fonction qui attend une mise a jour de l'affichage
-const affichageAsynchrone = async () => {
+const affichageAsynchrone = async () => {         // 11 - fonction qui attend une mise a jour de l'affichage
   await creationAffichagePanier()
   definitionProduitASupprimer()
   definitionProduitAModifier()
-  if (localStorage.length == 0) {
-    localStorage.clear()
-  }
 }
  affichageAsynchrone()
