@@ -104,7 +104,7 @@ function postForm() {
       .then((data) => {               // on récupère orderId dans la réponse de l'API
         console.log("orderId fourni par l'API", data);
         document.location.href = "./confirmation.html?orderId=" + data.orderId  // on redirige vers la page confirmation
-        //localStorage.clear()
+        localStorage.clear()
       })
       .catch(function (error) {
           console.log ("Problème avec l'API : " + error.message)
