@@ -73,10 +73,11 @@ function postForm() {
     
     
     let panierJSON = JSON.parse(localStorage.getItem('panier'))
-   
+   console.log(panierJSON);
     let tableauFinal = new Array
     panierJSON.forEach(element => {
       tableauFinal.push(element.id)  // 1 - on créé un tableau avec les id des différents produits sélectionnés
+      
 
       const order = {             // 2 - fiche destinataire, qui contient les données client et les données produits
           contact : {
@@ -88,7 +89,7 @@ function postForm() {
           },
           products: tableauFinal,
       }
-      console.table(order) 
+      console.table("11-fiche client =", order) 
       
       const options = {        // 3 - options d'envoi
           method: 'POST',
